@@ -50,6 +50,8 @@
 						type: 'POST',
 						url: linkedInURL,
 						data: data,
+						crossDomain: true,
+						dataType: 'jsonp',
 						success: function(data) {
 							console.log(typeof(data));
 							console.log(data);
