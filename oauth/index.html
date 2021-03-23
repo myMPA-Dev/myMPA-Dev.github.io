@@ -1,11 +1,66 @@
-<html>
+<!doctype html>
+<html lang="en">
 	<head>
-		<script>
-			var url = new URL(window.location.href);
-			var c = url.searchParams.get("code");
-			console.log(c);
-		</script>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Bootstrap CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+		<title>myMPA-Dev-OAuth</title>
+		<style>
+			form {
+				padding: 15px;
+			}
+		</style>
 	</head>
 	<body>
+		<form>
+			<div class="mb-3">
+				<label for="clientIdInput" class="form-label">Client ID</label>
+				<input class="form-control" id="clientIdInput" placeholder="Input Client ID here">
+			</div>
+			<div class="mb-3">
+				<label for="clientSecretInput" class="form-label">Client Secret</label>
+				<input class="form-control" id="clientSecretInput" placeholder="Input Client Secret here">
+			</div>
+			<div class="mb-3">
+				<label for="redirectUriInput" class="form-label">Redirect URI</label>
+				<input class="form-control" id="redirectUriInput" placeholder="Input Redirect URI here">
+			</div>
+			<button id="submitBtn" type="button" class="btn btn-primary">Submit</button>
+		</form>
+		<div>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		<script>
+			var linkedInURL = "https://www.linkedin.com/oauth/v2/accessToken";
+			$(document).ready(function() {
+				var url = new URL(window.location.href);
+				var code = url.searchParams.get("code");
+				var data = JSON.stringify({ 
+					grant_type: 'authorization_code',
+					client_id: $("#clientIdInput").val(), 
+					client_secret: $("#clientSecretInput").val(),
+					code: code,
+					redirect_uri: $("#redirectUriInput").val()
+				});
+
+				$("#submitBtn").click(function() {
+					$.ajax({
+						type: 'POST',
+						url: url,
+						data: data,
+						success: function(data) {
+							console.log(typeof(data));
+							console.log(data);
+						},
+						error: function(data) {
+							console.log(typeof(data));
+							console.log(data);
+						}
+					});
+				});
+			});
+		</script>
 	</body>
 </html>
